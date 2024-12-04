@@ -43,12 +43,14 @@ Runner::Runner(
     // NOTE: we observed ~2x loading performance increase on iPhone 15
     // and a ~5% improvement on Galaxy S22 by switching to
     // FileDataLoader instead of MmapDataLoader + UseMlockIgnoreErrors.
+    //
+    // TODO: (infil00p: Figure out how to read the PTE metadata and fix this nonsense)
     : temperature_(temperature),
       module_(std::make_unique<Module>(model_path, Module::LoadMode::File)),
       tokenizer_path_(tokenizer_path),
       metadata_({
           {kEnableDynamicShape, false},
-          {kMaxSeqLen, 128},
+          {kMaxSeqLen, 4096},
           {kUseKVCache, true},
           {kUseSDPAWithKVCache, false},
       }) {
